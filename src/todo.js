@@ -3,7 +3,7 @@ import { rl } from './cli.js';
 import { filePath, createJSON, readJSON, updateJSON } from './fileManager.js';
 
 if (!fs.existsSync(filePath)) {
-  createJSON(filePath, { tasks:[] });
+  createJSON(filePath, { tasks: [] });
 }
 
 export const workData = readJSON(filePath);
