@@ -1,15 +1,21 @@
+import fs from 'fs';
 import { rl } from './cli.js';
+import { filePath, createJSON, readJSON, updateJSON } from './fileManager.js';
 
-const todoList = [];
+if (!fs.existsSync(filePath)) {
+  createJSON(filePath, { tasks:[] });
+}
+
+export const workData = readJSON(filePath);
 
 function addTask(task) {
-  todoList.push(task);
+  workData.tasks.push(task);
   console.log(`Задача "${task}" добавлена в список.\n`);
 }
 
 function removeTask(index) {
-  if (index >= 0 && index < todoList.length) {
-    const removedTask = todoList.splice(index, 1);
+  if (index >= 0 && index < workData.tasks.length) {
+    const removedTask = workData.tasks.splice(index, 1);
     console.log(`Задача "${removedTask}" удалена из списка.\n`);
   } else {
     console.log('Недопустимый индекс задачи.\n');
@@ -17,13 +23,13 @@ function removeTask(index) {
 }
 
 function showTasks() {
-  console.log('Список задач:');
-  if (todoList.lenth === 0) {
+  console.log('Список задач:\n');
+  if (workData.tasks.lenth === 0) {
     console.log('Список задач пуст.\n');
   } else {
-    for (let i = 0; i < todoList.length; i += 1) {
-      console.log(`${i}. ${todoList[i]}`);
-      if (i === todoList.length - 1) {
+    for (let i = 0; i < workData.tasks.length; i += 1) {
+      console.log(`${i}. ${workData.tasks[i]}`);
+      if (i === workData.tasks.length - 1) {
         console.log();
       }
     }
@@ -31,8 +37,8 @@ function showTasks() {
 }
 
 function clearTasks() {
-  todoList.splice(0, todoList.length);
-  console.log('Список дел очищен.\n');
+  workData.tasks.splice(0, workData.tasks.length);
+  console.log('Список задач очищен.\n');
 }
 
 export default function commandHandler(command) {
@@ -55,9 +61,10 @@ export default function commandHandler(command) {
       clearTasks();
       break;
     case 'exit':
+      updateJSON(filePath, workData);
       rl.close();
       break;
     default:
-      console.log('Недопустимая команда. Доступные команды: add, remove, list, clear, exit.\n');
+      console.log('Недопустимая команда. Доступные команды:\n add, remove, list, clear, exit.\n');
   }
 }

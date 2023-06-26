@@ -1,18 +1,18 @@
 import fs from 'fs';
 
-const filePath = 'hexpet.json';
+export const filePath = 'hexpet.json';
 
-function createDefaultJSON(path) {
-  const defaultJson = JSON.stringify({ tasks: [] });
-  fs.writeFileSync(path, defaultJson);
+export function createJSON(path, data) {
+  const JsonData = JSON.stringify(data);
+  fs.writeFileSync(path, JsonData);
 }
 
-function getParseJSON(path) {
-  const data = fs.readFileSync(path, 'utf8');
+export function readJSON(path) {
+  const data = fs.readFileSync(path, 'utf-8');
   return JSON.parse(data);
 }
 
-// Test
-
-createDefaultJSON(filePath);
-console.log(getParseJSON(filePath));
+export function updateJSON(path, data) {
+  const JsonData = JSON.stringify(data);
+  fs.writeFileSync(path, JsonData);
+}

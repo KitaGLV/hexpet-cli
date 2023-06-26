@@ -1,5 +1,7 @@
 import readline from 'readline';
 import commandHandler from './todo.js';
+import { filePath, updateJSON } from './fileManager.js';
+import { workData } from './todo.js';
 
 export const rl = readline.createInterface({
   input: process.stdin,
@@ -7,8 +9,17 @@ export const rl = readline.createInterface({
 });
 
 export function startCli() {
-  console.log('Добро пожаловать в HexPet!');
-  console.log('Доступные команды: add, remove, list, clear, exit\n');
+  const welcomeMessage = 'Добро пожаловать в менеджер задач HexPet!\n';
+  const commandsMessage = `Доступные команды:
+
+  add <название задачи> — добавить задачу в список
+  remove <числовой индекс задачи> — удалить задачу по индексу
+  list — вывести список задач
+  clear — очистить список задач
+  exit — завершить работу\n`;
+
+  console.log(welcomeMessage);
+  console.log(commandsMessage);
 
   rl.setPrompt('Введите команду: ');
   rl.prompt();
@@ -19,7 +30,8 @@ export function startCli() {
   });
 
   rl.on('close', () => {
-    console.log('До свидания!');
+    console.log('\n\nДо свидания!');
+    updateJSON(filePath, workData);
     process.exit(0);
   });
 }
