@@ -10,22 +10,22 @@ export const workData = readJSON(filePath);
 
 function addTask(task) {
   workData.tasks.push(task);
-  console.log(`Задача "${task}" добавлена в список.\n`);
+  console.log(`\nЗадача "${task}" добавлена в список.\n`);
 }
 
 function removeTask(index) {
   if (index >= 0 && index < workData.tasks.length) {
     const removedTask = workData.tasks.splice(index, 1);
-    console.log(`Задача "${removedTask}" удалена из списка.\n`);
+    console.log(`\nЗадача "${removedTask}" удалена из списка.\n`);
   } else {
-    console.log('Недопустимый индекс задачи.\n');
+    console.log('\nНедопустимый индекс задачи.\n');
   }
 }
 
 function showTasks() {
-  console.log('Список задач:\n');
+  console.log('\nСписок задач:\n');
   if (workData.tasks.lenth === 0) {
-    console.log('Список задач пуст.\n');
+    console.log('\nСписок задач пуст.\n');
   } else {
     for (let i = 0; i < workData.tasks.length; i += 1) {
       console.log(`${i}. ${workData.tasks[i]}`);
@@ -38,7 +38,7 @@ function showTasks() {
 
 function clearTasks() {
   workData.tasks.splice(0, workData.tasks.length);
-  console.log('Список задач очищен.\n');
+  console.log('\nСписок задач очищен.\n');
 }
 
 export default function commandHandler(command) {
@@ -65,6 +65,6 @@ export default function commandHandler(command) {
       rl.close();
       break;
     default:
-      console.log('Недопустимая команда. Доступные команды:\n add, remove, list, clear, exit.\n');
+      console.log('\nНедопустимая команда. Доступные команды:\n add, remove, list, clear, exit.\n');
   }
 }
